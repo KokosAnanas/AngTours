@@ -11,6 +11,8 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",

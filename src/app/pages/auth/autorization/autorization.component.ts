@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-autorization',
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './autorization.component.html',
   styleUrl: './autorization.component.scss',
 })
-export class AutorizationComponent { }
+export class AutorizationComponent implements OnInit, OnDestroy  {
+  ngOnInit(): void {}
+  ngOnDestroy(): void {}
+}
