@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { UserService } from '../../../services/user.service';
+import { IUserRegister } from '../../../models/user';
 
 @Component({
   selector: 'app-registration',
@@ -28,10 +29,12 @@ export class RegistrationComponent implements OnInit  {
   ngOnInit(): void { }
 
   onAuth(ev: Event): void {
-    this.userService.addUser({login: this.login, password: this.password});
+    console.log('ev', ev)
+    const postObj = {login: this.login, password: this.password, email:this.email} as IUserRegister
+    this.userService.registerUser(postObj)
   }
+
   input(ev: Event): void {
-    console.log('sd', ev)
   }
   
 }
