@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IUser } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-autorization',
@@ -17,7 +18,9 @@ export class AutorizationComponent implements OnInit, OnDestroy  {
   login: string;
   password: string;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {}
 
@@ -29,5 +32,6 @@ export class AutorizationComponent implements OnInit, OnDestroy  {
       password: this.password,
     }
     this.userService.authUser(user);
+    this.router.navigate(['tickets']);
   }
 }
