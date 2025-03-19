@@ -34,8 +34,8 @@ export class UserService {
     return this.http.post(API.registration, user, {responseType: 'text'});
   }
 
-  authUser(user: IUser): void {
-    this.http.post(API.auth, user).subscribe()
+  authUser(user: IUser): Observable<string> {
+    return this.http.post(API.auth, user, {responseType: 'text'});
   }
 
 }

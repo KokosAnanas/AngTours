@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IUser } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-autorization',
@@ -19,7 +20,8 @@ export class AutorizationComponent implements OnInit, OnDestroy  {
   password: string;
 
   constructor(private userService: UserService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {}
@@ -31,7 +33,13 @@ export class AutorizationComponent implements OnInit, OnDestroy  {
       login: this.login,
       password: this.password,
     }
-    this.userService.authUser(user);
-    this.router.navigate(['tickets']);
+    this.userService.authUser(user).subscribe(
+      () => {this.router.navigate(['tours']);},
+      () => {this.initToast('error', 'Не верный login или password');}
+    );
+  }
+
+  initToast(type: 'error' | 'success', text: string): void {
+    this.messageService.add({ severity: type, detail: text, life: 3000 });
   }
 }
