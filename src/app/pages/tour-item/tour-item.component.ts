@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ToursService } from '../../services/tours.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tour-item',
@@ -6,4 +8,11 @@ import { Component } from '@angular/core';
   templateUrl: './tour-item.component.html',
   styleUrl: './tour-item.component.scss',
 })
-export class TourItemComponent { }
+export class TourItemComponent implements OnInit {
+  tourId: string = null;
+  constructor (private tourService: ToursService, private: ActivatedRoute)
+
+  ngOnInit(): void {
+    this.tourId = this.route.snapshot.paramMap.get('id');
+  }
+}
