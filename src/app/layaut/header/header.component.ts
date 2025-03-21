@@ -1,18 +1,30 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { IUser } from '../../models/user';
+import { ButtonModule } from 'primeng/button';
+import { MenubarModule } from 'primeng/menubar';
 
 @Component({
   selector: 'app-header',
-  imports: [ DatePipe ],
+  imports: [ DatePipe, MenubarModule, ButtonModule ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
   dateTime: Date;
-  constructor() {}
+  menuItems: MenuItem[] = [];
+  user: IUser;
+  logoutIcon = 'pi pi-user'
+
+  constructor(private userServise: UserService, private router: Router) {}
   
   ngOnInit(): void {
+    this.user = this.userServise.getUser();
+    this.menuItems = this.initMenuItems();
 
     setInterval(() => {
       this.dateTime = new Date();
@@ -21,4 +33,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {}
 
+  initMenuItems(): MenuItem[] {
+    return [
+      {
+        label: 'Билеты',
+        routerLink: ['/tours'],
+      },
+      {
+        label: 'Настройки',
+        routerLink: ['/setting'],
+      },
+      {
+        label: 'Заказы',
+        routerLink: ['/orders'],
+      },      
+    ];
+  }
+
+  logOut(): void {
+    this.userServise.setUser(null);
+    this.router.navigate(['/auth']);
+  }
+
+  hoverLogoutBtn(val: boolean): void {
+    this.logoutIcon = val ? 'pi pi-sign-out' : 'pi pi-user';
+  }
+
 }
+

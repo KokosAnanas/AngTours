@@ -34,7 +34,10 @@ export class AutorizationComponent implements OnInit, OnDestroy  {
       password: this.password,
     }
     this.userService.authUser(user).subscribe(
-      () => {this.router.navigate(['tours']);},
+      () => {
+        this.userService.setUser(user);
+        this.router.navigate(['tours']);
+      },
       () => {this.initToast('error', 'Не верный login или password');}
     );
   }
