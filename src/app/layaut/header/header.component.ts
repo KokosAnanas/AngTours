@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   dateTime: Date;
   menuItems: MenuItem[] = [];
   user: IUser;
-  logoutIcon = 'pi pi-user'
+  logoutIcon = 'pi pi-user';
 
   constructor(private userServise: UserService, private router: Router) {}
   

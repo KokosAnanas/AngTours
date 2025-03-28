@@ -11,10 +11,10 @@
 				label="{{user?.login}}"
 				pTooltip="logout"
 				(mouseenter)="hoverLogoutBtn(true)"
-				(mouseenter)="hoverLogoutBtn(false)"
+				(mouseleave)="hoverLogoutBtn(false)"
 				(onClick)="logOut()"
 				severity="secondary"
-			/>
+			></p-button>
 		</div>
 
 		<div class="date">
