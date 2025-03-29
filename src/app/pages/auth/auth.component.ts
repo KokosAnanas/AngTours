@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void { }
+
   ngOnDestroy(): void { }
 
 }
