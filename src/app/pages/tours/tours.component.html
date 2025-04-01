@@ -1,9 +1,11 @@
 <p-inputgroup>
 
+<!--  (input)="searchTours($event)"-->
   <input
-    (input)="searchTours($event)"
+
     pInputText
     placeholder="Поиск тура"
+    [(ngModel)]="searchValue"
   />
 
   <p-inputgroup-addon>
@@ -14,7 +16,7 @@
 
 <div class="tours-list flex flex-wrap justify-content-around align-items-stretch">
 
-	@for (item of tours; track item.id) {
+	@for (item of tours | search : searchValue : 'name' ; track item.id) {
 
 		<div (click)="goToTour(item)"
 		class="m-2 col-3 tour-item align-self-stretch">

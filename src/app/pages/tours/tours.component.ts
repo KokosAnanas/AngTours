@@ -7,10 +7,12 @@ import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
 import {ITour} from '../../models/tours';
+import {SearchPipe} from '../../shared/pipes/search.pipe';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-tours',
-  imports: [CardModule, InputGroup, InputGroupAddon, Button, InputText],
+  imports: [CardModule, InputGroup, InputGroupAddon, Button, InputText, SearchPipe, FormsModule],
   templateUrl: './tours.component.html',
   styleUrl: './tours.component.scss',
 })
@@ -18,6 +20,7 @@ import {ITour} from '../../models/tours';
 export class ToursComponent implements OnInit {
   tours: ITour[] = []; // TODO add types
   toursStore: ITour[] = [];
+  searchValue: '';
 
   constructor( private toursService: ToursService,
     private route: ActivatedRoute,
