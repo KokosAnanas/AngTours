@@ -20,7 +20,6 @@ import {FormsModule} from '@angular/forms';
 export class ToursComponent implements OnInit {
   tours: ITour[] = []; // TODO add types
   toursStore: ITour[] = [];
-  searchValue: '';
 
   constructor( private toursService: ToursService,
     private route: ActivatedRoute,
