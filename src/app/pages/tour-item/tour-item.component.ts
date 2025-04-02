@@ -5,10 +5,11 @@ import {Button} from 'primeng/button';
 import {Card} from 'primeng/card';
 import {PrimeTemplate} from 'primeng/api';
 import {ITour} from '../../models/tours';
+import {NearestTourComponent} from './nearest-tour/nearest-tour.component';
 
 @Component({
   selector: 'app-tour-item',
-  imports: [ Button, RouterLink, Card, PrimeTemplate ],
+  imports: [ Button, RouterLink, Card, PrimeTemplate, NearestTourComponent ],
   templateUrl: './tour-item.component.html',
   styleUrl: './tour-item.component.scss',
 })

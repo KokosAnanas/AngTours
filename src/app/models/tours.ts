@@ -1,19 +1,15 @@
 export interface ITour {
-  id?: string;
-  createdAt?: string;
-  name?: string;
-  description?: string;
-  avatar?: string;
-  firstName?: string;
-  lastName?: string;
-  cardNumber?: string;
-  birthDate?: string;
-  age?: number;
-  citizenship?: string;
-  tourOperator?: string;
-  price?: string;
-  img?: string;
-  type?: string;
+  createdAt?: string,
+  name: string,
+  avatar?: string,
+  id: string,
+  description: string,
+  tourOperator: string,
+  price: string,
+  img: string,
+  type?: string,
+  date?: string,
+  locationId: string
 }
 
 export interface ITourServerResponse {

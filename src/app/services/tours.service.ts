@@ -21,6 +21,12 @@ export class ToursService {
     return this.http.get<ITour>(`${tourApi}/${id}`)
   }
 
+  getNearestTourByLocationId(id: string): Observable<ITour[]> {
+    return this.http.get<ITour[]>(API.nearestTours, {
+      params: {locationId:id}
+    });
+  }
+
   searchTours(tours: ITour[], value: string): ITour[] {
     if (Array.isArray(tours)) {
       return tours.filter((tour) => {

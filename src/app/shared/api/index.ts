@@ -1,4 +1,5 @@
 import { environment } from '../../../environments/environment.development';
+import {NearestTourComponent} from '../../pages/tour-item/nearest-tour/nearest-tour.component';
 
 const serverIp = environment.apiUrl
 
@@ -7,5 +8,6 @@ export const API = {
 	registration: `${serverIp}/register`,
 	tours: `${serverIp}/tours`,
 	tour: `${serverIp}/tour`,
-	config: `/config/config.json`
+	config: `/config/config.json`,
+  nearestTours: `${serverIp}/nearestTours`,
 }
