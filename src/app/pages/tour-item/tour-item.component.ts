@@ -6,6 +6,7 @@ import {Card} from 'primeng/card';
 import {PrimeTemplate} from 'primeng/api';
 import {ITour} from '../../models/tours';
 import {NearestTourComponent} from './nearest-tour/nearest-tour.component';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-tour-item',
@@ -17,14 +18,20 @@ export class TourItemComponent implements OnInit {
   tourId: string = null;
   tour: ITour;
 
-  constructor (private tourService: ToursService, private route: ActivatedRoute) {}
+  constructor (private tourService: ToursService,
+               private route: ActivatedRoute,
+               private location: Location) {}
 
   ngOnInit(): void {
     this.tourId = this.route.snapshot.paramMap.get('id');
-    console.log('TourId', this.tourId);
-    this.tourService.getTourById(this.tourId).subscribe(tour => {
+    this.tourService.getTourById(this.tourId).subscribe((tour) => {
       this.tour = tour;
     })
+  }
+
+  onTourChanges(ev: ITour): void {
+    this.tour = ev;
+    this.location.replaceState('tours/tour/'+this.tour.id);
   }
 }
 
