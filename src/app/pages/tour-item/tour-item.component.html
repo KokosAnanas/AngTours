@@ -1,1 +1,27 @@
-<p>tour-item works!</p>,
+<p-button
+  label="Back"
+  class="p-button-link"
+  routerLink="/tours"
+/>
+
+<div class="flex flex-1">
+  @if (tour) {
+    <p-card
+      header="{{tour.name}}"
+      subheader="{{tour.price}}"
+      styleClass="p-card-shadow col-10 overflow-hidden"
+    >
+      <ng-template pTemplate="header">
+        <img alt="card" src="/img/{{tour.img}}">
+      </ng-template>
+      <p>{{tour.description}}</p>
+    </p-card>
+  } @else {
+    Нет данных
+  }
+
+  <div class="nearest-tour"></div>
+
+</div>
+
+
