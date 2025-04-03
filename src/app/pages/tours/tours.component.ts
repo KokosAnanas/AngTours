@@ -9,6 +9,7 @@ import {InputText} from 'primeng/inputtext';
 import {ITour} from '../../models/tours';
 import {SearchPipe} from '../../shared/pipes/search.pipe';
 import {FormsModule} from '@angular/forms';
+import {HighlightActiveDirective} from '../../shared/directives/highlight-active.directive';
 
 @Component({
   selector: 'app-tours',
@@ -19,7 +20,8 @@ import {FormsModule} from '@angular/forms';
     Button,
     InputText,
     SearchPipe,
-    FormsModule
+    FormsModule,
+    HighlightActiveDirective
   ],
   templateUrl: './tours.component.html',
   styleUrl: './tours.component.scss',
@@ -51,5 +53,13 @@ export class ToursComponent implements OnInit {
     const target = ev.target as HTMLInputElement;
     const targetValue = target.value;
     this.tours = this.toursService.searchTours(this.toursStore, targetValue);
+  }
+
+  selectActive(index: number): void {
+    console.log('index', index);
+    const targetTour = this.tours.find((tour, i) => i === index);
+    if (targetTour) {
+      this.goToTour(targetTour);
+    }
   }
 }

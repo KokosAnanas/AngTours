@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logoutIcon = 'pi pi-user';
 
   constructor(private userServise: UserService, private router: Router) {}
-  
+
   ngOnInit(): void {
     this.user = this.userServise.getUser();
     this.menuItems = this.initMenuItems();
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.dateTime = new Date();
     }, 1000);
   }
-  
+
   ngOnDestroy(): void {}
 
   initMenuItems(): MenuItem[] {
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       {
         label: 'Заказы',
         routerLink: ['/orders'],
-      },      
+      },
     ];
   }
 
