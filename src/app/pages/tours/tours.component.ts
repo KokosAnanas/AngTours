@@ -12,7 +12,15 @@ import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-tours',
-  imports: [CardModule, InputGroup, InputGroupAddon, Button, InputText, SearchPipe, FormsModule],
+  imports: [
+    CardModule,
+    InputGroup,
+    InputGroupAddon,
+    Button,
+    InputText,
+    SearchPipe,
+    FormsModule
+  ],
   templateUrl: './tours.component.html',
   styleUrl: './tours.component.scss',
 })
