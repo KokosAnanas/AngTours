@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, NgZone, OnDestroy, OnInit} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [];
   user: IUser;
   logoutIcon = 'pi pi-user';
+  private ngZone = inject(NgZone);
 
   constructor(private userServise: UserService, private router: Router) {}
 
@@ -26,9 +27,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.user = this.userServise.getUser();
     this.menuItems = this.initMenuItems();
 
-    setInterval(() => {
+    this.ngZone.runOutsideAngular(() => setInterval(() => {
       this.dateTime = new Date();
-    }, 1000);
+    }, 1000))
+
   }
 
   ngOnDestroy(): void {}

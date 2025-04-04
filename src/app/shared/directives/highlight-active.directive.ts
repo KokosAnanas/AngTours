@@ -15,6 +15,7 @@ import {
     '(document:keyup)': 'initKeyUp($event)'
   },
 })
+
 export class HighlightActiveDirective implements AfterViewInit, OnInit, OnChanges, AfterViewChecked {
 
   @Input() selector: string
@@ -52,7 +53,7 @@ export class HighlightActiveDirective implements AfterViewInit, OnInit, OnChange
   changeIndex(shift: -1 | 1 | 0) {
     const items = [...this.el.nativeElement.querySelectorAll(this.selector)];
     const index = items.findIndex((e: Element) => e.classList.contains('active'));
-    console.log('items', items);
+    // console.log('items', items);
     if (!items.length) {
       return;
     }
@@ -74,7 +75,7 @@ export class HighlightActiveDirective implements AfterViewInit, OnInit, OnChange
   }
 
   initKeyUp(event: KeyboardEvent) {
-    console.log('event', event);
+    // console.log('event', event);
 
     if (event.key === 'ArrowRight') {
       this.changeIndex(1);
