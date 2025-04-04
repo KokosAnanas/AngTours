@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 
 export class UserService {
-  
+
   private currentUser: IUser | null = null;
 
   constructor(private http: HttpClient) { }
@@ -23,10 +23,16 @@ export class UserService {
   }
 
   getUser(): IUser {
-    return this.currentUser;
+    return this.currentUser || JSON.parse(sessionStorage.getItem('login'));
   }
 
   setUser(user: IUser): void {
     this.currentUser = user;
+    if (user !== null) {
+      sessionStorage.setItem('login', JSON.stringify(user.login));
+    } else {
+      sessionStorage.setItem('login', '');
+    }
+    console.log(sessionStorage);
   }
 }

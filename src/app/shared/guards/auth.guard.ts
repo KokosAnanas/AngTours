@@ -6,12 +6,18 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   const userService = inject(UserService);
   const  router = inject(Router);
-
-  const isAuth = !!userService.getUser();
-
-  if (!isAuth) {
-    router.navigate(['auth']);
+  const isAuth: boolean = false;
+  const isSessionStorageLogin = !!sessionStorage.getItem('login')
+  let isAuthResult: boolean = false;
+  console.log('isAuth ', isAuth)
+  if (!isSessionStorageLogin) {
+    const isAuth = !!userService.getUser()
+    if (!isAuth) {
+      router.navigate(['auth']);
+    }
   }
-
-  return isAuth;
+  if (isSessionStorageLogin || isAuth) {
+    isAuthResult = true;
+  }
+  return isAuthResult;
 };
