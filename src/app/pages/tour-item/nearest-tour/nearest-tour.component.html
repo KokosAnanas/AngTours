@@ -1,3 +1,19 @@
+
+<p-inputgroup>
+
+  <!--  (input)="searchTours($event)"-->
+  <input
+    pInputText
+    placeholder="Поиск тура"
+    #searchInput
+  />
+
+  <p-inputgroup-addon>
+    <p-button icon="pi pi-search" severity="secondary" variant="text"/>
+  </p-inputgroup-addon>
+</p-inputgroup>
+
+
 <p-galleria
   (activeIndexChange)="activeIndexChange($event)"
   class="tour-item-galleria"

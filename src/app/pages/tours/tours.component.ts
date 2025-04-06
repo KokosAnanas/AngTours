@@ -45,7 +45,7 @@ export class ToursComponent implements OnInit {
     });
   }
 
-  goToTour(item: any): void { // TODO add interface
+  goToTour(item: ITour): void { // TODO add interface
     this.router.navigate(['tour', item.id], {relativeTo: this.route});
   }
 
