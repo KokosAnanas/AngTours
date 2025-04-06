@@ -13,13 +13,18 @@ function initializeApp(config: ConfigService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
     providePrimeNG({
         theme: {
             preset: Aura
-        }
+        },
+      translation: {
+          dayNames: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
+                    'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+      }
     }),
     provideHttpClient(),
     provideAppInitializer(() => initializeApp(inject(ConfigService)))

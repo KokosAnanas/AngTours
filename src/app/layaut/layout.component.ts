@@ -31,7 +31,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   recursFindChildData(children: ActivatedRouteSnapshot, prop: string): boolean {
-    console.log('children', children)
+    // console.log('children', children)
     if (!children.data[prop] && children.firstChild) {
       return this.recursFindChildData(children.firstChild, prop);
     } else {

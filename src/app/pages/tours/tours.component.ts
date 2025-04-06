@@ -10,6 +10,7 @@ import {ITour} from '../../models/tours';
 import {SearchPipe} from '../../shared/pipes/search.pipe';
 import {FormsModule} from '@angular/forms';
 import {HighlightActiveDirective} from '../../shared/directives/highlight-active.directive';
+import {isValid} from 'date-fns';
 
 @Component({
   selector: 'app-tours',
@@ -51,7 +52,21 @@ export class ToursComponent implements OnInit {
       }
     })
 
-    console.log('activatedRoute', this.route)
+    // Date
+    this.toursService.TourDate$.subscribe((date) => {
+      this.tours = this.toursStore.filter((tour) => {
+        if (isValid(new Date(tour.date))) {
+
+          const tourDate = new Date(tour.date).setHours(0, 0, 0, 0); // обнуляем часы/...
+          const calendarDate = new Date(date).setHours(0, 0, 0);
+          return tourDate === calendarDate;
+        } else {
+          return false;
+        }
+      });
+    })
+
+    // console.log('activatedRoute', this.route)
     this.toursService.getTours().subscribe((data) => {
       if (Array.isArray(data?.tours)) {
         this.tours = data.tours;

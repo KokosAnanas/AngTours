@@ -9,10 +9,12 @@ import { DatePickerModule } from 'primeng/datepicker';
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss'],
-  imports: [SelectModule, FormsModule],
+  imports: [SelectModule, FormsModule, DatePickerModule],
 })
 export class AsideComponent implements OnInit {
   private tourService = inject(ToursService);
+
+  date: Date = null; // или new Date()
 
   selectedType: any = null; // TODO defined type
 
@@ -22,12 +24,18 @@ export class AsideComponent implements OnInit {
     { key: 'all', label: 'Все' },
   ];
 
+
   ngOnInit(): void {
     this.selectedType = this.tourTypes.find((type) => type.key === 'all');
   }
 
   changeTourType(ev: SelectChangeEvent): void {
     this.tourService.initChangeTourType(this.selectedType);
+  }
+
+  changeDate(ev: Date): void {
+    console.log('****change date');
+    this.tourService.initChangeTourDate(ev)
   }
 
 
