@@ -36,6 +36,21 @@ export class ToursComponent implements OnInit {
     private router: Router ) {}
 
   ngOnInit(): void {
+
+    this.toursService.TourType$.subscribe((tour) =>{
+      switch (tour.key) {
+        case 'group':
+          this.tours = this.toursStore.filter(el => el.type === 'group');
+          break;
+        case 'single':
+          this.tours = this.toursStore.filter(el => el.type === 'single');
+          break;
+        case 'all':
+          this.tours = [...this.toursStore];
+          break;
+      }
+    })
+
     console.log('activatedRoute', this.route)
     this.toursService.getTours().subscribe((data) => {
       if (Array.isArray(data?.tours)) {
