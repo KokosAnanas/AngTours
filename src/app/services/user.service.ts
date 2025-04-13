@@ -29,7 +29,7 @@ export class UserService {
   setUser(user: IUser): void {
     this.currentUser = user;
     if (user !== null) {
-      sessionStorage.setItem('login', JSON.stringify(user.login));
+      sessionStorage.setItem('login', JSON.stringify({login:user.login}));
     } else {
       sessionStorage.setItem('login', '');
     }

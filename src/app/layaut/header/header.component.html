@@ -8,7 +8,7 @@
 		<div class="logout">
 			<p-button
 				[icon] = "logoutIcon"
-				label="{{user?.login}}"
+				[label]="getLogin()"
 				pTooltip="logout"
 				(mouseenter)="hoverLogoutBtn(true)"
 				(mouseleave)="hoverLogoutBtn(false)"

@@ -4,9 +4,10 @@ const cors = require('cors');
 const express = require('express');
 const { log } = require('console');
 
-// user
+
 const userJson = "./server-data/users.json";
 const toursJson = "./server-data/tours.json";
+const countriesJson = "./server-data/countries.json";
 const jsonFileData =  fs.readFileSync(userJson, 'utf-8');
 let  parseJsonData = JSON.parse(jsonFileData);
 
@@ -109,7 +110,7 @@ app.get('/tour/:id', (req, res) => {
 
 /*******************get tour */
 app.get('/tour/:id', (req, res) => {
-  const jsonFileData =  fs.readFileSync(toursJson, 'utf-8', (err, data) => {}, (err) => {
+  const jsonFileData =  fs.readFileSync(countriesJson, 'utf-8', (err, data) => {}, (err) => {
     console.log('err read file tours', err);});
   // parse data
   const  parseJsonData = JSON.parse(jsonFileData);
@@ -137,6 +138,18 @@ app.get('/nearestTours', (req, res) => {
 
   const items = parseJsonData.tours.filter((tour) => tour.locationId === locationId);
   res.send(items);
+});
+
+
+/*******************get countries */
+app.get('/countries', (req, res) => {
+  const jsonFileData =  fs.readFileSync(countriesJson, 'utf-8', (err, data) => {}, (err) => {
+    console.log('err read file tours', err);});
+
+  // parse data
+  const  parseJsonData = JSON.parse(jsonFileData);
+
+  res.send(parseJsonData);
 });
 
 // run and listen serve

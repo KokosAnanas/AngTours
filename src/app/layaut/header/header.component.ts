@@ -6,10 +6,11 @@ import { MenuItem } from 'primeng/api';
 import { IUser } from '../../models/user';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
+import {Tooltip} from 'primeng/tooltip';
 
 @Component({
   selector: 'app-header',
-  imports: [ DatePipe, MenubarModule, ButtonModule ],
+  imports: [DatePipe, MenubarModule, ButtonModule, Tooltip],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -59,6 +60,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   hoverLogoutBtn(val: boolean): void {
     this.logoutIcon = val ? 'pi pi-sign-out' : 'pi pi-user';
+  }
+
+  getLogin() {
+    return this.user?.login
   }
 
 }
