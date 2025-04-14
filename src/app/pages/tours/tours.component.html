@@ -33,7 +33,10 @@
 
 				<p>{{item.description}}</p>
 
-        <p>Страна: {{item.contry?.name_ru}} <img [src]="item.country?.flag_url" alt=""/> </p>
+        <p (click)="getCountryDetail($event, item.country?.iso_code2)" >
+          Страна: {{item.contry?.name_ru}}
+          <img [src]="item.country?.flag_url" alt=""/>
+        </p>
 
 			</p-card>
 		</div>
@@ -41,3 +44,13 @@
     <div class="no-data"> Нет данных </div>
   }
 </div>
+
+<p-dialog [(visible)]="showModal" [modal]="true" [style]="{ width: '50rem' }">
+
+  @if (showModal) {
+    <map [location]="location"></map>
+  }
+  <ng-template #footer>
+    <p-button label="Закрыть" [text]="true" severity="secondary" (click)="showModal=false" />
+  </ng-template>
+</p-dialog>

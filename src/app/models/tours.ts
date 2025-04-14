@@ -29,3 +29,8 @@ export interface IFilerTypeLogic {
   key: 'all' | 'single' | 'group',
   label?: string,
 }
+
+export interface ILocation {
+  lat: number,
+  lng: number,
+}

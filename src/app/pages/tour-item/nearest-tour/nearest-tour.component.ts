@@ -43,7 +43,7 @@ export class NearestTourComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes)
+    // console.log('changes', changes)
     const tour = changes['tourNearest']?.currentValue as ITour;
 
     if (tour?.locationId && this.activeLocationId !== tour?.locationId) {
@@ -56,7 +56,7 @@ export class NearestTourComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   ngAfterViewInit(): void {
-    console.log('searchInput afterView', this.searchInput)
+    // console.log('searchInput afterView', this.searchInput)
     const eventObservable = fromEvent<InputEvent>(this.searchInput.nativeElement, 'input')
 
    this.subscription = eventObservable.subscribe((ev) => {
@@ -76,7 +76,7 @@ export class NearestTourComponent implements OnInit, OnChanges, AfterViewInit, O
   }
 
   activeIndexChange(index: number) {
-    console.log('index', index);
+    // console.log('index', index);
     const tours = this.toursArr();
     const activeTour = tours.find((el, i) => i === index);
     this.onTourChange.emit(activeTour);

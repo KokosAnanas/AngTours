@@ -6,13 +6,14 @@ import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import {ITour} from '../../models/tours';
+import {ILocation, ITour} from '../../models/tours';
 import {SearchPipe} from '../../shared/pipes/search.pipe';
 import {FormsModule} from '@angular/forms';
 import {HighlightActiveDirective} from '../../shared/directives/highlight-active.directive';
 import {isValid} from 'date-fns';
 import {Subject, takeUntil} from 'rxjs';
-import * as console from 'node:console';
+import {MapComponent} from '../../shared/component/map/map.component';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-tours',
@@ -24,7 +25,9 @@ import * as console from 'node:console';
     InputText,
     SearchPipe,
     FormsModule,
-    HighlightActiveDirective
+    HighlightActiveDirective,
+    MapComponent,
+    DialogModule
   ],
   templateUrl: './tours.component.html',
   styleUrl: './tours.component.scss',
@@ -34,6 +37,8 @@ export class ToursComponent implements OnInit, OnDestroy {
   tours: ITour[] = []; // TODO add types
   toursStore: ITour[] = [];
   destroyer = new Subject<boolean>();
+  showModal = false;
+  location: ILocation = null
 
   constructor( private toursService: ToursService,
     private route: ActivatedRoute,
@@ -89,11 +94,11 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.router.navigate(['tour', item.id], {relativeTo: this.route});
   }
 
-  searchTours(ev: Event): void {
-    const target = ev.target as HTMLInputElement;
-    const targetValue = target.value;
-    this.tours = this.toursService.searchTours(this.toursStore, targetValue);
-  }
+  // searchTours(ev: Event): void {
+  //   const target = ev.target as HTMLInputElement;
+  //   const targetValue = target.value;
+  //   this.tours = this.toursService.searchTours(this.toursStore, targetValue);
+  // }
 
   selectActive(index: number): void {
     console.log('index', index);
@@ -107,4 +112,19 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.destroyer.next(true);
     this.destroyer.complete();
   }
+
+  getCountryDetail(ev: MouseEvent, code: string): void {
+    ev.stopPropagation();
+    this.toursService.getCountryByCode(code).subscribe((data) => {
+      if (Array.isArray(data)) {
+        const countryInfo = data[0];
+        console.log('countryInfo', countryInfo);
+        this.location = {lat: countryInfo.latlng[0], lng: countryInfo.latlng[1]};
+        this.showModal = true;
+      }
+    })
+  }
+
+
+
 }
