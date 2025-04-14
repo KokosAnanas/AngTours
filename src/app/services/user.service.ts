@@ -33,6 +33,6 @@ export class UserService {
     } else {
       sessionStorage.setItem('login', '');
     }
-    console.log(sessionStorage);
+    // console.log(sessionStorage);
   }
 }

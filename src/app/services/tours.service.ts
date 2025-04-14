@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {delay, forkJoin, map, Observable, of, Subject} from 'rxjs';
 import { API } from '../shared/api';
-import {ICountriesResponseItem, ITour, ITourServerResponse} from '../models/tours';
+import {ICountriesResponseItem, IFilerTypeLogic, ITour, ITourServerResponse} from '../models/tours';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import {ICountriesResponseItem, ITour, ITourServerResponse} from '../models/tour
 export class ToursService {
 
   // type
-  private TourTypeSubject = new Subject<any>(); // TODO defined type
+  private TourTypeSubject = new Subject<IFilerTypeLogic>(); // TODO defined type
   readonly TourType$ = this.TourTypeSubject.asObservable();
 
   // date
@@ -42,7 +42,7 @@ export class ToursService {
           toursWithCountries = toursArr.map((tour) => {
             return {
               ...tour,
-              countries: countriesMap.get(tour.code) || null // add new prop
+              country: countriesMap.get(tour.code) || null // add new prop
             }
           })
         }

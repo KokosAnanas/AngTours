@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ToursService } from '../../services/tours.service';
 import { CardModule } from 'primeng/card';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Event, Router} from '@angular/router';
 import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {Button} from 'primeng/button';
@@ -11,6 +11,8 @@ import {SearchPipe} from '../../shared/pipes/search.pipe';
 import {FormsModule} from '@angular/forms';
 import {HighlightActiveDirective} from '../../shared/directives/highlight-active.directive';
 import {isValid} from 'date-fns';
+import {Subject, takeUntil} from 'rxjs';
+import * as console from 'node:console';
 
 @Component({
   selector: 'app-tours',
@@ -28,9 +30,10 @@ import {isValid} from 'date-fns';
   styleUrl: './tours.component.scss',
 })
 
-export class ToursComponent implements OnInit {
+export class ToursComponent implements OnInit, OnDestroy {
   tours: ITour[] = []; // TODO add types
   toursStore: ITour[] = [];
+  destroyer = new Subject<boolean>();
 
   constructor( private toursService: ToursService,
     private route: ActivatedRoute,
@@ -38,7 +41,11 @@ export class ToursComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.toursService.TourType$.subscribe((tour) =>{
+    // Type
+    this.toursService.TourType$.pipe(
+      takeUntil(this.destroyer)
+
+    ).subscribe((tour) =>{
       switch (tour.key) {
         case 'group':
           this.tours = this.toursStore.filter(el => el.type === 'group');
@@ -53,7 +60,10 @@ export class ToursComponent implements OnInit {
     })
 
     // Date
-    this.toursService.TourDate$.subscribe((date) => {
+    this.toursService.TourDate$.pipe(
+      takeUntil(this.destroyer)
+
+    ).subscribe((date) => {
       this.tours = this.toursStore.filter((tour) => {
         if (isValid(new Date(tour.date))) {
 
@@ -91,5 +101,10 @@ export class ToursComponent implements OnInit {
     if (targetTour) {
       this.goToTour(targetTour);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroyer.next(true);
+    this.destroyer.complete();
   }
 }

@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const isAuth: boolean = false;
   const isSessionStorageLogin = !!sessionStorage.getItem('login')
   let isAuthResult: boolean = false;
-  console.log('isAuth ', isAuth)
+
   if (!isSessionStorageLogin) {
     const isAuth = !!userService.getUser()
     if (!isAuth) {

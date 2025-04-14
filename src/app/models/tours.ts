@@ -25,7 +25,7 @@ export interface ICountriesResponseItem {
   flag_url: string,
 }
 
-// export interface IFilerTypeLogic {
-//   key: 'all' | 'single' | 'group',
-//   label: string,
-// }
+export interface IFilerTypeLogic {
+  key: 'all' | 'single' | 'group',
+  label?: string,
+}
