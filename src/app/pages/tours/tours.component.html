@@ -47,6 +47,10 @@
 
 <p-dialog [(visible)]="showModal" [modal]="true" [style]="{ width: '50rem' }">
 
+  <ng-template pTemplate="header">
+    <p>Погода:</p>
+  </ng-template>
+
   @if (showModal) {
     <map [location]="location"></map>
   }

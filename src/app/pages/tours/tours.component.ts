@@ -40,9 +40,11 @@ export class ToursComponent implements OnInit, OnDestroy {
   showModal = false;
   location: ILocation = null
 
-  constructor( private toursService: ToursService,
+  constructor(
+    private toursService: ToursService,
     private route: ActivatedRoute,
-    private router: Router ) {}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
 
@@ -116,10 +118,11 @@ export class ToursComponent implements OnInit, OnDestroy {
   getCountryDetail(ev: MouseEvent, code: string): void {
     ev.stopPropagation();
     this.toursService.getCountryByCode(code).subscribe((data) => {
-      if (Array.isArray(data)) {
-        const countryInfo = data[0];
-        console.log('countryInfo', countryInfo);
-        this.location = {lat: countryInfo.latlng[0], lng: countryInfo.latlng[1]};
+      console.log('****new data', data);
+      if (data) {
+        const countrieInfo = data.countrieData;
+        console.log('countryInfo', countrieInfo);
+        this.location = {lat: countrieInfo.latlng[0], lng: countrieInfo.latlng[1]};
         this.showModal = true;
       }
     })
