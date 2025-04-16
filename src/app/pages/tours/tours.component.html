@@ -49,6 +49,14 @@
 
   <ng-template pTemplate="header">
     <p>Погода:</p>
+    <div>
+      Температура сегодня днём {{ weatherData.currentWeather }} °C
+    </div>
+    <div>
+      @if ( weatherData.rain === 0 && weatherData.snowfall === 0 ) { Без осадков }
+      @if ( weatherData.rain === 1 ) { Дождь }
+      @if ( weatherData.snowfall === 1 ) { Снегопад }
+    </div>
   </ng-template>
 
   @if (showModal) {

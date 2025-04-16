@@ -14,3 +14,10 @@ export interface IWeatherCurrent {
 export interface IWeatherHourly {
   temperature_2m: number[];
 }
+
+export interface IWeatherData {
+  isDay: WeatherCurrentValue,
+  snowfall: WeatherCurrentValue,
+  rain: WeatherCurrentValue,
+  currentWeather: number
+}

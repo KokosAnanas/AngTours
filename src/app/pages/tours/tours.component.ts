@@ -6,7 +6,7 @@ import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import {ILocation, ITour} from '../../models/tours';
+import {Coords, ILocation, ITour} from '../../models/tours';
 import {SearchPipe} from '../../shared/pipes/search.pipe';
 import {FormsModule} from '@angular/forms';
 import {HighlightActiveDirective} from '../../shared/directives/highlight-active.directive';
@@ -14,6 +14,7 @@ import {isValid} from 'date-fns';
 import {Subject, takeUntil} from 'rxjs';
 import {MapComponent} from '../../shared/component/map/map.component';
 import { DialogModule } from 'primeng/dialog';
+import {IWeatherData} from '../../models/map';
 
 @Component({
   selector: 'app-tours',
@@ -38,7 +39,8 @@ export class ToursComponent implements OnInit, OnDestroy {
   toursStore: ITour[] = [];
   destroyer = new Subject<boolean>();
   showModal = false;
-  location: ILocation = null
+  location: ILocation = null;
+  weatherData: IWeatherData | null = null;
 
   constructor(
     private toursService: ToursService,
@@ -123,6 +125,7 @@ export class ToursComponent implements OnInit, OnDestroy {
         const countrieInfo = data.countrieData;
         console.log('countryInfo', countrieInfo);
         this.location = {lat: countrieInfo.latlng[0], lng: countrieInfo.latlng[1]};
+        this.weatherData = data.weatherData
         this.showModal = true;
       }
     })

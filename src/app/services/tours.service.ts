@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap} from 'rxjs';
 import { API } from '../shared/api';
 import {Coords, ICountriesResponseItem, IFilerTypeLogic, ITour, ITourServerResponse} from '../models/tours';
-import {IWeatherResponse} from '../models/map';
+import {IWeatherData, IWeatherResponse} from '../models/map';
 import {MapService} from './map.service';
 import {LoaderService} from './loader.service';
 
@@ -75,6 +75,12 @@ export class ToursService {
     return this.http.get<ITour>(`${tourApi}/${id}`)
   }
 
+  deleteTourById(id: string): Observable<ITour> { // TODO add types for response
+    const tourApi = API.tour;
+    const path = API.tour+'/'+id; // альтернативный способ
+    return this.http.delete<ITour>(`${tourApi}/${id}`)
+  }
+
   getNearestTourByLocationId(id: string): Observable<ITour[]> {
     return this.http.get<ITour[]>(API.nearestTours, {
       params: {locationId:id}
@@ -123,7 +129,7 @@ export class ToursService {
             const current = weatherResponse.current;
             const hourly = weatherResponse.hourly;
 
-            const weatherData = {
+            const weatherData: IWeatherData = {
               isDay: current.is_day,
               snowfall: current.snowfall,
               rain: current.rain,
