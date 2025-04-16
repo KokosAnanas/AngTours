@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {delay, forkJoin, map, Observable, of, Subject, switchMap, tap} from 'rxjs';
+import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap} from 'rxjs';
 import { API } from '../shared/api';
 import {Coords, ICountriesResponseItem, IFilerTypeLogic, ITour, ITourServerResponse} from '../models/tours';
 import {IWeatherResponse} from '../models/map';
@@ -61,6 +61,10 @@ export class ToursService {
       tap((data) => {
         // hide loader
         this.loaderService.setLoader(false)
+      }),
+      catchError((err) => {
+        this.loaderService.setLoader(false)
+        return of(null)
       })
     )
   }
