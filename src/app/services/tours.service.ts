@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {delay, forkJoin, map, Observable, of, Subject, switchMap} from 'rxjs';
+import {delay, forkJoin, map, Observable, of, Subject, switchMap, tap} from 'rxjs';
 import { API } from '../shared/api';
 import {Coords, ICountriesResponseItem, IFilerTypeLogic, ITour, ITourServerResponse} from '../models/tours';
 import {IWeatherResponse} from '../models/map';
 import {MapService} from './map.service';
+import {LoaderService} from './loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,13 @@ export class ToursService {
   private TourDateSubject = new Subject<Date>();
   readonly TourDate$ = this.TourDateSubject.asObservable();
 
-  constructor(private http: HttpClient, private mapService: MapService) { }
+  constructor(private http: HttpClient, private mapService: MapService, private loaderService: LoaderService) { }
 
   getTours(): Observable<ITour[]> {
+
+    // set loader
+    this.loaderService.setLoader(true)
+
     const countries = this.http.get<ICountriesResponseItem[]>(API.countries);
     const tours = this.http.get<ITourServerResponse>(API.tours);
     const testObservale = of(1, 2, 3).pipe(
@@ -30,6 +35,8 @@ export class ToursService {
 
     // parralel
     return forkJoin<[ICountriesResponseItem[], ITourServerResponse]>([countries, tours]).pipe(
+      delay(1000),
+
       map((data) => {
 
         let toursWithCountries = [] as ITour[];
@@ -50,6 +57,10 @@ export class ToursService {
         }
 
         return toursWithCountries
+      }),
+      tap((data) => {
+        // hide loader
+        this.loaderService.setLoader(false)
       })
     )
   }
