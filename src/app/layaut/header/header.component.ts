@@ -1,5 +1,5 @@
 import {Component, inject, NgZone, OnDestroy, OnInit} from '@angular/core';
-import { DatePipe } from '@angular/common';
+import {AsyncPipe, DatePipe} from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -7,10 +7,14 @@ import { IUser } from '../../models/user';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import {Tooltip} from 'primeng/tooltip';
+import {OverlayBadgeModule} from 'primeng/overlaybadge';
+import {Observable} from 'rxjs';
+import {ITour} from '../../models/tours';
+import {BasketService} from '../../services/basket.service';
 
 @Component({
   selector: 'app-header',
-  imports: [DatePipe, MenubarModule, ButtonModule, Tooltip],
+  imports: [DatePipe, MenubarModule, ButtonModule, Tooltip, OverlayBadgeModule, AsyncPipe],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -20,12 +24,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [];
   user: IUser;
   logoutIcon = 'pi pi-user';
-  private ngZone = inject(NgZone);
+  basketStore$: Observable<ITour[]> = null;
 
-  constructor(private userServise: UserService, private router: Router) {}
+  constructor(
+              private userService: UserService,
+              private router: Router,
+              private ngZone: NgZone,
+              private basketService: BasketService,
+              ) {}
 
   ngOnInit(): void {
-    this.user = this.userServise.getUser();
+    this.basketStore$ = this.basketService.basketStore$;
+
+    this.user = this.userService.getUser();
     this.menuItems = this.initMenuItems();
 
     this.ngZone.runOutsideAngular(() => setInterval(() => {
@@ -54,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logOut(): void {
-    this.userServise.setUser(null);
+    this.userService.setUser(null);
     this.router.navigate(['/auth']);
   }
 

@@ -15,6 +15,7 @@ import {Subject, takeUntil} from 'rxjs';
 import {MapComponent} from '../../shared/component/map/map.component';
 import { DialogModule } from 'primeng/dialog';
 import {IWeatherData} from '../../models/map';
+import {BasketService} from '../../services/basket.service';
 
 @Component({
   selector: 'app-tours',
@@ -45,7 +46,8 @@ export class ToursComponent implements OnInit, OnDestroy {
   constructor(
     private toursService: ToursService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private basketService: BasketService
   ) {}
 
   ngOnInit(): void {
@@ -131,6 +133,40 @@ export class ToursComponent implements OnInit, OnDestroy {
     })
   }
 
+  removeTour(ev: MouseEvent, tour: ITour): void {
+    ev.stopPropagation();
+    this.toursService.deleteTourById(tour?.id).subscribe()
+  }
+
+  setItemToBasket(ev: MouseEvent, item: ITour): void {
+    ev.stopPropagation();
+    this.basketService.setItemToBasket(item);
+  }
+  removeItemFromBasket(ev: MouseEvent, item: ITour): void {
+    ev.stopPropagation();
+    this.basketService.removeItemFromBasket(item);
+  }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

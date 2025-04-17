@@ -21,8 +21,9 @@
 
 	@for (item of tours | search : searchInput.value : 'name' ; track item.id) {
 		<div (click)="goToTour(item)"
-		class="m-2 col-3 tour-item align-self-stretch">
-			<p-card
+		  class="m-2 col-3 tour-item align-self-stretch">
+
+      <p-card
 				header="{{item.name}}"
 				subheader="{{item.price}}"
 				styleClass="tour-p-card"
@@ -39,6 +40,15 @@
         </p>
 
 			</p-card>
+
+      <div class="basket my-2 ml-2">
+        @if (!item.inBasket) {
+          <i (click)="setItemToBasket($event, item)" class="pi pi-cart-plus" style="color: green" ></i>
+        } @else {
+          <i (click)="removeItemFromBasket($event, item)" class="pi pi-cart-minus" style="color: red" ></i>
+        }
+      </div>
+
 		</div>
 	} @empty {
     <div class="no-data"> Нет данных </div>
@@ -53,9 +63,13 @@
       Температура сегодня днём {{ weatherData.currentWeather }} °C
     </div>
     <div>
-      @if ( weatherData.rain === 0 && weatherData.snowfall === 0 ) { Без осадков }
-      @if ( weatherData.rain === 1 ) { Дождь }
-      @if ( weatherData.snowfall === 1 ) { Снегопад }
+      @if ( weatherData.rain === 1 ) {
+        Дождь
+      } @else if ( weatherData.snowfall === 1 ) {
+        Снегопад
+      } @else {
+        Без осадков
+      }
     </div>
   </ng-template>
 

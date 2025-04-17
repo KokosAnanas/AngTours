@@ -12,6 +12,7 @@ export interface ITour {
   code?: string,
   createdAt?: string,
   avatar?: string,
+  inBasket?: boolean,
 }
 
 export interface ITourServerResponse {
@@ -36,5 +37,5 @@ export interface ILocation {
 }
 
 export type Coords = {
-  latlng: [number, number] 
+  latlng: [number, number]
 };
