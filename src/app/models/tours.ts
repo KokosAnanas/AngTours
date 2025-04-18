@@ -40,13 +40,13 @@ export type Coords = {
   latlng: [number, number]
 };
 
-export interface IorderBody {
+export interface IOrderBody {
   userLogin: string
   tourID: string
-  personalData: IpersonalData[]
+  personalData: IPersonalData[]
 }
 
-export interface IpersonalData {
+export interface IPersonalData {
   age: number
   birthDate: Date
   carNumber: string

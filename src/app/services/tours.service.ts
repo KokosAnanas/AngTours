@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap, withLatestFrom} from 'rxjs';
 import { API } from '../shared/api';
-import {Coords, ICountriesResponseItem, IFilerTypeLogic, IorderBody, ITour, ITourServerResponse} from '../models/tours';
+import {Coords, ICountriesResponseItem, IFilerTypeLogic, IOrderBody, ITour, ITourServerResponse} from '../models/tours';
 import {IWeatherData, IWeatherResponse} from '../models/map';
 import {MapService} from './map.service';
 import {LoaderService} from './loader.service';
@@ -156,8 +156,8 @@ export class ToursService {
     );
   }
 
-  postOrder(orderBody: IorderBody): Observable<IorderBody> { // TODO add interfaces
-    return this.http.post<IorderBody>(API.order, orderBody);
+  postOrder(orderBody: IOrderBody): Observable<string> { // TODO add interfaces
+    return this.http.post<string>(API.order, orderBody);
   }
 
 

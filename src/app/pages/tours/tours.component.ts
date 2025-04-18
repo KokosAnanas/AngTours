@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ToursService } from '../../services/tours.service';
 import { CardModule } from 'primeng/card';
-import {ActivatedRoute, Event, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {Button} from 'primeng/button';
@@ -42,6 +42,7 @@ export class ToursComponent implements OnInit, OnDestroy {
   showModal = false;
   location: ILocation = null;
   weatherData: IWeatherData | null = null;
+  selectedTour: ITour = null;
 
   constructor(
     private toursService: ToursService,
@@ -100,11 +101,11 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.router.navigate(['tour', item.id], {relativeTo: this.route});
   }
 
-  // searchTours(ev: Event): void {
-  //   const target = ev.target as HTMLInputElement;
-  //   const targetValue = target.value;
-  //   this.tours = this.toursService.searchTours(this.toursStore, targetValue);
-  // }
+  searchTours(ev: Event): void {
+    const target = ev.target as HTMLInputElement;
+    const targetValue = target.value;
+    this.tours = this.toursService.searchTours(this.toursStore, targetValue);
+  }
 
   selectActive(index: number): void {
     console.log('index', index);
@@ -119,7 +120,7 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.destroyer.complete();
   }
 
-  getCountryDetail(ev: MouseEvent, code: string): void {
+  getCountryDetail(ev: MouseEvent, code: string, tour: ITour): void {
     ev.stopPropagation();
     this.toursService.getCountryByCode(code).subscribe((data) => {
       console.log('****new data', data);
@@ -127,7 +128,8 @@ export class ToursComponent implements OnInit, OnDestroy {
         const countrieInfo = data.countrieData;
         console.log('countryInfo', countrieInfo);
         this.location = {lat: countrieInfo.latlng[0], lng: countrieInfo.latlng[1]};
-        this.weatherData = data.weatherData
+        this.weatherData = data.weatherData;
+        this.selectedTour = tour;
         this.showModal = true;
       }
     })
@@ -138,7 +140,7 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.toursService.deleteTourById(tour?.id).subscribe()
   }
 
-  setItemToBasket(ev: MouseEvent, item: ITour): void {
+  setItemToBasket(ev: Event, item: ITour): void {
     ev.stopPropagation();
     this.basketService.setItemToBasket(item);
   }
