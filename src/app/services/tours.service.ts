@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap} from 'rxjs';
+import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap, withLatestFrom} from 'rxjs';
 import { API } from '../shared/api';
 import {Coords, ICountriesResponseItem, IFilerTypeLogic, IorderBody, ITour, ITourServerResponse} from '../models/tours';
 import {IWeatherData, IWeatherResponse} from '../models/map';
 import {MapService} from './map.service';
 import {LoaderService} from './loader.service';
+import {BasketService} from './basket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,10 @@ export class ToursService {
   private TourDateSubject = new Subject<Date>();
   readonly TourDate$ = this.TourDateSubject.asObservable();
 
-  constructor(private http: HttpClient, private mapService: MapService, private loaderService: LoaderService) { }
+  constructor(private http: HttpClient,
+              private mapService: MapService,
+              private loaderService: LoaderService,
+              private basketService: BasketService) { }
 
   getTours(): Observable<ITour[]> {
 
@@ -36,8 +40,8 @@ export class ToursService {
     // parralel
     return forkJoin<[ICountriesResponseItem[], ITourServerResponse]>([countries, tours]).pipe(
       delay(1000),
-
-      map((data) => {
+      withLatestFrom(this.basketService.basketStore$),
+      map(([data, basketData]) => {
 
         let toursWithCountries = [] as ITour[];
         const toursArr = data[1].tours;
@@ -49,6 +53,12 @@ export class ToursService {
 
         if (Array.isArray(toursArr)) {
           toursWithCountries = toursArr.map((tour) => {
+            const isTourInBasket = basketData.find((basketTour) => basketTour.id === tour.id);
+
+            if (isTourInBasket) {
+              tour.inBasket = true;
+            }
+
             return {
               ...tour,
               country: countriesMap.get(tour.code) || null // add new prop
