@@ -39,3 +39,19 @@ export interface ILocation {
 export type Coords = {
   latlng: [number, number]
 };
+
+export interface IorderBody {
+  userLogin: string
+  tourID: string
+  personalData: IpersonalData[]
+}
+
+export interface IpersonalData {
+  age: number
+  birthDate: Date
+  carNumber: string
+  citizenship: string
+  firstName: string
+  lastName: string
+}
+

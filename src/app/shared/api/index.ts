@@ -12,5 +12,6 @@ export const API = {
   nearestTours: `${serverIp}/nearestTours`,
   countries: `${serverIp}/countries`,    // test mistake
   countryByCode: 'https://restcountries.com/v3.1/alpha',
-  getWeather: 'https://api.open-meteo.com/v1/forecast'
+  getWeather: 'https://api.open-meteo.com/v1/forecast',
+  order: `${serverIp}/order`,
 }
