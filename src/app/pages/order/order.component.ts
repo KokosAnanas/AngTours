@@ -28,9 +28,12 @@ export class OrderComponent implements OnInit {
   tour: ITour;
   userForm: FormGroup;
   userFormFiledsArr = [
-    {label: 'Имя', placeHolder: 'Введите имя', control: 'firstName'},
-    {label: 'Фамилия', placeHolder: 'Введите фамилию', control: 'lastName'},
-    {label: 'Номер Карты', placeHolder: 'Введите номер карты', control: 'carNumber'}
+    {label: 'Имя', placeHolder: 'Введите имя', control: 'firstName', type: 'text'},
+    {label: 'Фамилия', placeHolder: 'Введите фамилию', control: 'lastName', type: 'text'},
+    {label: 'Номер Карты', placeHolder: 'Введите номер карты', control: 'carNumber', type: 'text'},
+    {label: 'Возраст', min: '2', control: 'age', type: 'number'},
+    {label: 'День рождения', control: 'birthDate', type: 'date'},
+    {label: 'Гражданство', placeHolder: 'Введите гражданство', control: 'citizenship', type: 'text'},
   ]
 
   constructor (private tourService: ToursService,
