@@ -11,6 +11,13 @@
       <h2>Информация о покупателе</h2>
       <form>
         <div class="user-info mt-3" [formGroup]="userForm">
+
+          @for (fieldObj of userFormFiledsArr; track fieldObj.control) {
+            <ng-container
+            [ngTemplateOutlet]="formFiled"
+            [ngTemplateOutletContext]="fieldObj"/>
+          }
+
           <div class="form-group mt-3">
             <label for="name" class="mt-3">Имя</label>
             <input type="text"
@@ -85,6 +92,20 @@
 
   </div>
 </div>
+
+<ng-template #formFiled let-controlNew="control" let-placeHolder="placeHolder" let-label="label">
+  <div [formGroup]="userForm" class="form-group mx-3">
+    <label [attr.for]="controlNew" class="mx-3">{{label}}</label>
+    <input type="text"
+           class="form-control mt-3"
+           [id]="controlNew"
+           pInputText
+           [formControlName]="controlNew"
+           [placeholder]="placeHolder"
+    >
+  </div>
+
+</ng-template>
 
 
 
