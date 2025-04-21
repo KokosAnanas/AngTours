@@ -1,7 +1,7 @@
 import {Component, inject, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {AsyncPipe, DatePipe} from '@angular/common';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { IUser } from '../../models/user';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +14,7 @@ import {BasketService} from '../../services/basket.service';
 
 @Component({
   selector: 'app-header',
-  imports: [DatePipe, MenubarModule, ButtonModule, Tooltip, OverlayBadgeModule, AsyncPipe],
+  imports: [DatePipe, MenubarModule, ButtonModule, Tooltip, OverlayBadgeModule, AsyncPipe, RouterLink],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })

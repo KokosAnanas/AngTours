@@ -24,6 +24,7 @@
     & .basket {
       display: flex;
       align-items: center;
+      cursor: pointer;
       & .basket-icon-wrap {
         position: relative;
         top: 10px;

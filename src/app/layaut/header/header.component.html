@@ -6,18 +6,22 @@
 
 		<div class="user-info"></div>
 
-    <div class="basket mr-4">
-      <p-overlaybadge
-        [value]="(basketStore$ | async).length"
-        severity="danger"
-        badgeSize="small">
+      <div class="basket mr-4" routerLink="basket">
+        <!--         (onClick)="initBasket($event)" -->
 
-        <div class="basket-icon-wrap">
-          <i class="pi pi-cart-arrow-down" ></i>
-        </div>
+        <p-overlaybadge
+          [value]="(basketStore$ | async).length"
+          severity="danger"
+          badgeSize="small">
 
-      </p-overlaybadge>
-    </div>
+          <div class="basket-icon-wrap">
+            <i class="pi pi-cart-arrow-down" ></i>
+          </div>
+
+        </p-overlaybadge>
+      </div>
+
+
 
 		<div class="logout mr-4">
 			<p-button

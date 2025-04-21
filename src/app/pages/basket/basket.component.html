@@ -1,16 +1,32 @@
-<p-table [value]="basketItems$ | async" [tableStyle]="{ 'min-width': '50rem' }">
-  <ng-template #header>
-    <tr>
-      <th>Тур</th>
-      <th>Цена</th>
-      <th>Дата</th>
-    </tr>
-  </ng-template>
-  <ng-template #body let-tour>
-    <tr>
-      <td>{{ tour.name }}</td>
-      <td>{{ tour.price }}</td>
-      <td>{{ tour.data }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+<p-button
+  label="Back"
+  class="p-button-link"
+  routerLink="/tours"
+/>
+
+
+@if ( (basketItems$ | async)?.length > 0 ) {
+  <p-table [value]="basketItems$ | async" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+      <tr>
+        <th>Тур</th>
+        <th>Цена</th>
+        <th>Дата</th>
+        <th>Удалить</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-tour>
+      <tr>
+        <td>{{ tour.name }}</td>
+        <td>{{ tour.price }}</td>
+        <td>{{ tour.data }}</td>
+        <td >
+          <i (click)="removeItem(tour)" class="pi pi-trash" style="cursor: pointer; color: red"></i>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+} @else {
+  <div class="m-3">Карзина пустая</div>
+}
