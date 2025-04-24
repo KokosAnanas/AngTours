@@ -19,7 +19,7 @@
       <tr>
         <td>{{ tour.name }}</td>
         <td>{{ tour.price }}</td>
-        <td>{{ tour.data }}</td>
+        <td>{{ tour.date | date: 'longDate' }}</td>
         <td >
           <i (click)="removeItem(tour)" class="pi pi-trash" style="cursor: pointer; color: red"></i>
         </td>

@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap, withLatestFrom} from 'rxjs';
 import { API } from '../shared/api';
-import {Coords, ICountriesResponseItem, IFilerTypeLogic, IOrderBody, ITour, ITourServerResponse} from '../models/tours';
+import {Coords, ICountriesResponseItem, IFilerTypeLogic, ITour, ITourServerResponse} from '../models/tours';
 import {IWeatherData, IWeatherResponse} from '../models/map';
 import {MapService} from './map.service';
 import {LoaderService} from './loader.service';
 import {BasketService} from './basket.service';
+import {IOrder} from '../models/orders';
 
 @Injectable({
   providedIn: 'root'
@@ -156,7 +157,7 @@ export class ToursService {
     );
   }
 
-  postOrder(orderBody: IOrderBody): Observable<string> { // TODO add interfaces
+  postOrder(orderBody: IOrder): Observable<string> { // TODO add interfaces
     return this.http.post<string>(API.order, orderBody);
   }
 

@@ -3,13 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { ToursService } from '../../services/tours.service';
 import { DatePickerModule } from 'primeng/datepicker';
+import {Checkbox} from 'primeng/checkbox';
 
 
 @Component({
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss'],
-  imports: [SelectModule, FormsModule, DatePickerModule],
+  imports: [SelectModule, FormsModule, DatePickerModule, Checkbox],
 })
 export class AsideComponent implements OnInit {
   private tourService = inject(ToursService);

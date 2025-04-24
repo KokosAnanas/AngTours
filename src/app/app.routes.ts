@@ -9,18 +9,28 @@ import {ChangePasswordComponent} from './pages/settings/change-password/change-p
 import {StatisticComponent} from './pages/settings/statistic/statistic.component';
 import {OrderComponent} from './pages/order/order.component';
 import {BasketComponent} from './pages/basket/basket.component';
+import {OrdersComponent} from './pages/orders/orders.component';
 
 export const routes: Routes = [
 	{ path: 'auth', component: AuthComponent },
+
 	{ path: '', redirectTo: '/auth', pathMatch: 'full' },
-	{ path: 'tours',
+
+	{ path: '',
     canActivate: [authGuard],
     component: LayoutComponent,
 		children: [
-			{ path: '', component: ToursComponent, data: {showAside: true} },
-			{ path: 'tour/:id', component: TourItemComponent },
-			{ path: 'tour', redirectTo: '', pathMatch: 'full' },
+
+      { path: 'tours', children: [
+          { path: '', component: ToursComponent, data: {showAside: true} },
+          { path: 'tour/:id', component: TourItemComponent },
+          { path: 'tour', redirectTo: '', pathMatch: 'full' },
+          { path: 'order/:id', component: OrderComponent },
+        ] },
+
       { path: 'basket', component: BasketComponent },
+
+      { path: 'orders', component: OrdersComponent},
 
       { path: "settings",
         canActivate: [authGuard],
@@ -31,9 +41,8 @@ export const routes: Routes = [
           { path: "statistic", component: StatisticComponent, data: {showAside: true}},
         ]
       },
-      { path: 'order/:id', component: OrderComponent },
-		]
+		],
 	},
 
-    { path: '**', redirectTo: '/auth', pathMatch: 'full' },
+  { path: '**', redirectTo: '/auth', pathMatch: 'full' },
 ];

@@ -9,11 +9,11 @@ export const errorInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, n
 
   return next(req).pipe(
     tap((reg) => {
-      console.log('req', req)
+      // console.log('req', req)
     }),
 
     catchError((err) => {
-      console.log('err', err);
+      // console.log('err', err);
       messageService.add({severity: 'error', summary: err?.message})
       return throwError(() => err);
     })
