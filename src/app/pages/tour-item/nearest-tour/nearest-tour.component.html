@@ -13,18 +13,25 @@
   </p-inputgroup-addon>
 </p-inputgroup>
 
+<!--    шаблонные блоки @if/@else реализованы в компоненте basket-->
 
-<p-galleria
-  (activeIndexChange)="activeIndexChange($event)"
-  class="tour-item-galleria"
-  [value]="toursArr()"
-  [showIndicators]="true"
-  [showThumbnails]="false"
-  [containerStyle]="{ 'width': '340px' }"
->
+<div *ngIf="toursArr()?.length > 0; else elseBlock" class="width: 300px">
+  <p-galleria
+    (activeIndexChange)="activeIndexChange($event)"
+    class="tour-item-galleria"
+    [value]="toursArr()"
+    [showIndicators]="true"
+    [showThumbnails]="false"
+    [containerStyle]="{ 'width': '340px' }"
+  >
 
-  <ng-template #item let-item>
-    <img [ngSrc]="'/img/'+ item.img" priority alt="" fill/>
-  </ng-template>
+    <ng-template #item let-item>
+      <img [ngSrc]="'/img/'+ item.img" priority alt="" fill/>
+    </ng-template>
 
-</p-galleria>
+  </p-galleria>
+</div>
+<ng-template #elseBlock>Туров не найдено</ng-template>
+
+
+

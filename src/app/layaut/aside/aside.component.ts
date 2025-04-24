@@ -4,6 +4,7 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { ToursService } from '../../services/tours.service';
 import { DatePickerModule } from 'primeng/datepicker';
 import {Checkbox} from 'primeng/checkbox';
+import {IFilerTypeLogic} from '../../models/tours';
 
 
 @Component({
@@ -17,9 +18,9 @@ export class AsideComponent implements OnInit {
 
   date: Date = null; // или new Date()
 
-  selectedType: any = null; // TODO defined type
+  selectedType: IFilerTypeLogic = null; // TODO defined type
 
-  tourTypes: {key: string, label: string}[] = [                    // TODO defined type
+  tourTypes: IFilerTypeLogic[] = [                    // TODO defined type
     { key: 'single', label: 'Одиночный' },
     { key: 'group', label: 'Групповой' },
     { key: 'all', label: 'Все' },
@@ -40,4 +41,8 @@ export class AsideComponent implements OnInit {
   }
 
 
+  clearDate() {
+    this.date = null;
+    this.tourService.initChangeTourDate(null);
+  }
 }

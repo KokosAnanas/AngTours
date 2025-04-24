@@ -76,6 +76,12 @@ export class ToursComponent implements OnInit, OnDestroy {
       takeUntil(this.destroyer)
 
     ).subscribe((date) => {
+
+      if (!date) {
+        this.tours = [...this.toursStore];
+        return;
+      }
+
       this.tours = this.toursStore.filter((tour) => {
         if (isValid(new Date(tour.date))) {
 
