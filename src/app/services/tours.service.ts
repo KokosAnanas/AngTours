@@ -86,10 +86,10 @@ export class ToursService {
     return this.http.get<ITour>(`${tourApi}/${id}`)
   }
 
-  deleteTourById(id: string): Observable<ITour> { // TODO add types for response
+  deleteTourById(id: string): Observable<ITour[]> { // TODO add types for response
     const tourApi = API.tour;
     const path = API.tour+'/'+id; // альтернативный способ
-    return this.http.delete<ITour>(`${tourApi}/${id}`)
+    return this.http.delete<ITour[]>(`${tourApi}/${id}`)
   }
 
   getNearestTourByLocationId(id: string): Observable<ITour[]> {

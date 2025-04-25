@@ -13,3 +13,16 @@
     }
   }
 }
+
+.tour-item {
+  position: relative;
+
+  .delete-btn {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    cursor: pointer;
+
+    i { font-size: 1.2rem; color: #d32f2f; } // красный цвет
+  }
+}

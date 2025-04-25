@@ -12,6 +12,8 @@
   </p-inputgroup-addon>
 </p-inputgroup>
 
+<p-confirmDialog></p-confirmDialog>
+
 
 <div appHighlightActive
   selector='.tour-item'
@@ -47,6 +49,12 @@
         } @else {
           <i (click)="removeItemFromBasket($event, item)" class="pi pi-cart-minus" style="color: red" ></i>
         }
+      </div>
+
+      <div class="delete-btn" *ngIf="isAdmin">
+        <i class="pi pi-trash"
+           (click)="confirmDelete($event, item)"
+           title="Удалить тур"></i>
       </div>
 
 		</div>

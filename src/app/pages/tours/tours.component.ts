@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { ToursService } from '../../services/tours.service';
 import { CardModule } from 'primeng/card';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -16,10 +16,15 @@ import {MapComponent} from '../../shared/component/map/map.component';
 import { DialogModule } from 'primeng/dialog';
 import {ICountryWeatherResponse, IWeatherData} from '../../models/map';
 import {BasketService} from '../../services/basket.service';
+import {UserService} from '../../services/user.service';
+import {ConfirmationService} from 'primeng/api';
+import {ConfirmDialog} from 'primeng/confirmdialog';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-tours',
   imports: [
+    NgIf,
     CardModule,
     InputGroup,
     InputGroupAddon,
@@ -29,8 +34,10 @@ import {BasketService} from '../../services/basket.service';
     FormsModule,
     HighlightActiveDirective,
     MapComponent,
-    DialogModule
+    DialogModule,
+    ConfirmDialog
   ],
+  providers: [ConfirmationService],
   templateUrl: './tours.component.html',
   styleUrl: './tours.component.scss',
 })
@@ -39,16 +46,19 @@ export class ToursComponent implements OnInit, OnDestroy {
   tours: ITour[] = []; // TODO add types
   toursStore: ITour[] = [];
   destroyer = new Subject<boolean>();
+  #userService = inject(UserService)
   showModal = false;
   location: ILocation = null;
   weatherData: IWeatherData | null = null;
   selectedTour: ITour = null;
+  isAdmin = this.#userService.getUser()?.login === 'admin';
 
   constructor(
     private toursService: ToursService,
     private route: ActivatedRoute,
     private router: Router,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -155,8 +165,26 @@ export class ToursComponent implements OnInit, OnDestroy {
     this.basketService.removeItemFromBasket(item);
   }
 
+  confirmDelete(ev: MouseEvent, tour: ITour): void {
+    ev.stopPropagation();          // не даём карточке перейти на страницу тура
+    this.confirmationService.confirm({
+      target: ev.target as HTMLElement,
+      header: 'Удаление тура',
+      message: `Удалить тур «${tour.name}»?`,
+      acceptLabel: 'Да',
+      rejectLabel: 'Нет',
+      accept: () => {
+        this.toursService.deleteTourById(tour.id).subscribe((tours) => {
+          this.tours      = tours;
+          this.toursStore = [...tours];     // обновили кеш
+        });
+      }
+    });
+  }
+
 
 }
+
 
 
 
