@@ -14,7 +14,7 @@ import {isValid} from 'date-fns';
 import {Subject, takeUntil} from 'rxjs';
 import {MapComponent} from '../../shared/component/map/map.component';
 import { DialogModule } from 'primeng/dialog';
-import {IWeatherData} from '../../models/map';
+import {ICountryWeatherResponse, IWeatherData} from '../../models/map';
 import {BasketService} from '../../services/basket.service';
 
 @Component({
@@ -128,7 +128,7 @@ export class ToursComponent implements OnInit, OnDestroy {
 
   getCountryDetail(ev: MouseEvent, code: string, tour: ITour): void {
     ev.stopPropagation();
-    this.toursService.getCountryByCode(code).subscribe((data) => {
+    this.toursService.getCountryByCode(code).subscribe((data: ICountryWeatherResponse) => {
       console.log('****new data', data);
       if (data) {
         const countrieInfo = data.countrieData;

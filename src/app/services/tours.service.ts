@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {catchError, delay, forkJoin, map, Observable, of, Subject, switchMap, tap, withLatestFrom} from 'rxjs';
 import { API } from '../shared/api';
 import {Coords, ICountriesResponseItem, IFilerTypeLogic, ITour, ITourServerResponse} from '../models/tours';
-import {IWeatherData, IWeatherResponse} from '../models/map';
+import {ICountryWeatherResponse, IWeatherData, IWeatherResponse} from '../models/map';
 import {MapService} from './map.service';
 import {LoaderService} from './loader.service';
 import {BasketService} from './basket.service';
@@ -121,7 +121,7 @@ export class ToursService {
     this.TourDateSubject.next(val);
   }
 
-  getCountryByCode(code: string): Observable<any> {    //TODO add types
+  getCountryByCode(code: string): Observable<ICountryWeatherResponse> {    //TODO add types
 
     return this.http.get<Coords[]>(API.countryByCode, {params: {codes:code}}).pipe(
 
